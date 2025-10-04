@@ -1,0 +1,1 @@
+Simple utility to check system info 
