@@ -7,18 +7,40 @@
 #include <sys/stat.h>
 #include "sys-info.h"
 
+UI::UI(char *cp, int cs)
+{
+    // Apply settings
+    if (cp == NULL)
+    {
+        getcwd(current_path, sizeof(current_path));
+    }
+    else
+    {
+        strcpy(this->current_path, cp);
+    }
+    this->color_scheme = cs;
+}
+
+void UI::printPath()
+{
+    attron(COLOR_PAIR(color_scheme));
+    mvprintw(0, 0, "Path: %s", current_path);
+    attroff(COLOR_PAIR(color_scheme));
+}
+
+void UI::printNav()
+{
+    attron(COLOR_PAIR(color_scheme));
+    mvprintw(1, 0, "Navigate: UP/DOWN  Enter=Open  Backspace=Up  q=Quit");
+    attroff(COLOR_PAIR(color_scheme));
+}
+
 void UI::drawMenu()
 {
     char buffer[1000];
     clear();
-
-    attron(COLOR_PAIR(1));
-    mvprintw(0, 0, "Path: %s", current_path);
-    attroff(COLOR_PAIR(1));
-
-    attron(COLOR_PAIR(3));
-    mvprintw(1, 0, "Navigate: UP/DOWN  Enter=Open  Backspace=Up  q=Quit");
-    attroff(COLOR_PAIR(3));
+    printPath();
+    printNav();
 
     SysInfo::getCpuInfo(buffer);
     mvprintw(3, 0, buffer);
@@ -75,16 +97,15 @@ void UI::listDir(const char *path)
 int UI::renderUi()
 {
 
-    getcwd(current_path, sizeof(current_path));
     listDir(current_path);
 
     // Init colors
     initscr();
-    start_color(); 
+    start_color();
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
     init_pair(3, COLOR_YELLOW, COLOR_BLACK);
-    
+
     noecho();
     cbreak();
     keypad(stdscr, TRUE);

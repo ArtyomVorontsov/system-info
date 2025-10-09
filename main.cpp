@@ -1,14 +1,16 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include "./class/sys-info.h"
 #include "./class/ui.h"
+#include "./class/config.h"
 
 int main()
 {
     SysInfo *sysInfo = new SysInfo();
-    UI *ui = new UI();
+
+    Config::loadEnv(".system-info-config");
+
+    UI *ui = new UI(Config::default_path, Config::color_scheme);
     ui->renderUi();
-    // sysInfo->getCpuInfo();
-    // sysInfo->getMemInfo();
-    // sysInfo->getDiskInfo();
-    // sysInfo->getGpuInfo();
-    // sysInfo->getKernelInfo();
 }
