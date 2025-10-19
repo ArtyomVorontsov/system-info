@@ -7,6 +7,7 @@
 #include <memory>
 #include <array>
 #include <sys/utsname.h>
+#include <sys/time.h>
 
 char *SysInfo::getCpuInfo(char *buffer)
 {
@@ -84,9 +85,19 @@ char *SysInfo::getKernelInfo(char *buffer)
     struct utsname textBuffer;
     if (uname(&textBuffer) == 0)
     {
-        std::cout << "OS: " << textBuffer.sysname << " " << textBuffer.release << std::endl;
-
         sprintf(buffer, "%s %s %s %s\n", "OS: ", textBuffer.sysname, " ", textBuffer.release);
+    }
+
+    return buffer;
+}
+
+char *SysInfo::getSystemTime(char *buffer)
+{
+    timeval tv;
+
+    if (gettimeofday(&tv, nullptr) == 0)
+    {
+        sprintf(buffer, "UNIX epoch time: %d\n", tv.tv_sec);
     }
 
     return buffer;

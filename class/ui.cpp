@@ -57,6 +57,9 @@ void UI::drawMenu()
     SysInfo::getKernelInfo(buffer);
     mvprintw(7, 0, buffer);
 
+    SysInfo::getSystemTime(buffer);
+    mvprintw(8, 0, buffer);
+
     for (int i = 0; i < file_count; i++)
     {
         if (i == current_selection)

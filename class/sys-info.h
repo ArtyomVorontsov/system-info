@@ -5,4 +5,5 @@ class SysInfo {
         static char *getDiskInfo(char *buffer);
         static char *getGpuInfo(char *buffer);
         static char *getKernelInfo(char *buffer);
+        static char *getSystemTime(char *buffer);
 };

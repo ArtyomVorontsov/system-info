@@ -3,6 +3,9 @@
 #include <string.h>
 #include "config.h"
 
+char *Config::default_path = "/";
+int Config::color_scheme = 0;
+
 void Config::loadEnv(const char *filename)
 {
     FILE *file = fopen(filename, "r");
@@ -28,6 +31,6 @@ void Config::loadEnv(const char *filename)
 
     fclose(file);
 
-    default_path = getenv("DEFAULT_PATH");
-    color_scheme = atoi(getenv("COLOR_SCHEME"));
+    Config::default_path = getenv("DEFAULT_PATH");
+    Config::color_scheme = atoi(getenv("COLOR_SCHEME"));
 }

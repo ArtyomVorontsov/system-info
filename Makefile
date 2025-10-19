@@ -1,11 +1,11 @@
 OBJS=class/*.cpp \
-class/*h \
+class/*.h \
 main.cpp \
 
 all: system-info.out
 
 system-info.out: $(OBJS)
-	g++ ./class/sys-info.h ./class/sys-info.cpp main.cpp ./class/ui.cpp -o system-info.out -lncurses
+	g++ ./class/config.h ./class/sys-info.h ./class/ui.h ./class/config.cpp  ./class/sys-info.cpp main.cpp ./class/ui.cpp -o system-info.out -lncurses
 
 clear: 
 	rm -rf *.out *.o
